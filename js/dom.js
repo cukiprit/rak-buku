@@ -1,8 +1,11 @@
-const UNCOMPLETED_BOOK_ID = "read-books";
-const COMPLETED_BOOK_ID = "completed-read-books";
+const UNCOMPLETED_BOOK_ID = "incompleteBookshelfList";
+const COMPLETED_BOOK_ID = "completeBookshelfList";
 const RAK_BUKUID = "bookId";
 
 function createBookshelf(judul, penulis, tahun, isCompleted){
+    const bookID = document.createElement("div");
+    bookID.setAttribute("id", "bookId");
+
     const textJudul = document.createElement("h3");
     textJudul.setAttribute("id", "judul");
     textJudul.innerText = judul;
@@ -17,7 +20,7 @@ function createBookshelf(judul, penulis, tahun, isCompleted){
 
     const textContainer = document.createElement("article");
     textContainer.classList.add("book_item");
-    textContainer.append(textJudul, textPenulis, textTahun);
+    textContainer.append(bookID, textJudul, textPenulis, textTahun);
 
     if(isCompleted){
         textContainer.append(createUnfinishedButton(), createDeleteButton());
@@ -25,6 +28,7 @@ function createBookshelf(judul, penulis, tahun, isCompleted){
     else{
         textContainer.append(createFinishedButton());
     }
+    return textContainer;
 }
 
 function createUnfinishedButton(){
@@ -58,9 +62,9 @@ function createButton(buttonTypeClass, buttonText, eventListener){
 
 function addBook(){
     const uncompletedBookList = document.getElementById(UNCOMPLETED_BOOK_ID);
-    const textJudul = document.getElementById("inputBoxTitle").value;
-    const textPenulis = document.getElementById("inputBoxAuthor").value;
-    const textTahun = document.getElementById("inputBoxYear").value;
+    const textJudul = document.getElementById("inputBookTitle").value;
+    const textPenulis = document.getElementById("inputBookAuthor").value;
+    const textTahun = document.getElementById("inputBookYear").value;
 
     const buku = createBookshelf(textJudul, textPenulis, textTahun, false);
     const objekBuku = composeBookshelfObject(textJudul, textPenulis, textTahun. false);
