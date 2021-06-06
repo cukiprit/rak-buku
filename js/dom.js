@@ -58,9 +58,9 @@ function createButton(buttonTypeClass, buttonText, eventListener){
 
 function addBook(){
     const uncompletedBookList = document.getElementById(UNCOMPLETED_BOOK_ID);
-    const textJudul = document.getElementById("inputBoxTitle").value;
-    const textPenulis = document.getElementById("inputBoxAuthor").value;
-    const textTahun = document.getElementById("inputBoxYear").value;
+    const textJudul = document.getElementById("inputBookTitle").value;
+    const textPenulis = document.getElementById("inputBookAuthor").value;
+    const textTahun = document.getElementById("inputBookYear").value;
 
     const buku = createBookshelf(textJudul, textPenulis, textTahun, false);
     const objekBuku = composeBookshelfObject(textJudul, textPenulis, textTahun. false);
