@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
         addBook();
     });
 
-    if(isStorageExist()){
+    if(supportStorage()){
         loadDataFromStorage();
     }
 });

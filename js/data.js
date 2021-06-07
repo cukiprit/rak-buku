@@ -18,6 +18,7 @@ function saveBook(){
 
 function loadDataFromStorage(){
     const serialData = localStorage.getItem(BOOKSHELF_KEY);
+
     let data = JSON.parse(serialData);
 
     if(data !== null){
@@ -34,7 +35,7 @@ function updateDataToStorage(){
 
 function composeBookshelfObject(judul, penulis, tahun, isCompleted){
     return {
-        id: +new Date,
+        id: +new Date(),
         judul,
         penulis,
         tahun,
@@ -45,7 +46,7 @@ function composeBookshelfObject(judul, penulis, tahun, isCompleted){
 function findBook(idBuku){
     for(buku of rakBuku){
         if(buku.id === idBuku){
-            return todo;
+            return buku;
         }
     }
     return null;
@@ -53,7 +54,7 @@ function findBook(idBuku){
 
 function findBookIndex(idBuku){
     let index = 0;
-    for(buku of idBuku){
+    for(buku of rakBuku){
         if(buku.id === idBuku){
             return index;
         }
@@ -61,21 +62,4 @@ function findBookIndex(idBuku){
         index++;
     }
     return -1;
-}
-
-function refreshDataFromBookshelf(){
-    const listUncompleted = document.getElementById(UNCOMPLETED_BOOK_ID);
-    let listCompleted = document.getElementById(COMPLETED_BOOK_ID);
-
-    for(buku of rakBuku){
-        const newBook = createBookshelf(buku.judul, buku.penulis, buku.tahun, buku.isCompleted);
-        newBook[RAK_BUKUID] = buku.id;
-
-        if(buku.isCompleted){
-            listCompleted.append(newBook);
-        }
-        else {
-            listUncompleted.append(newBook);
-        }
-    }
 }
