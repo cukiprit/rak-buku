@@ -26,7 +26,8 @@ function createBookshelf(judul, penulis, tahun, isCompleted){
         );
     } else {
         textContainer.append(
-            createFinishedButton()
+            createFinishedButton(),
+            createDeleteButton()
         );
     }
     return textContainer;
@@ -34,6 +35,7 @@ function createBookshelf(judul, penulis, tahun, isCompleted){
 
 function addBook(){
     const uncompletedBookList = document.getElementById(UNCOMPLETED_BOOK_ID);
+    const completedBookList = document.getElementById(COMPLETED_BOOK_ID);
     const textJudul = document.getElementById("inputBookTitle").value;
     const textPenulis = document.getElementById("inputBookAuthor").value;
     const textTahun = document.getElementById("inputBookYear").value;
@@ -41,16 +43,13 @@ function addBook(){
 
     let check = null;
 
-    checkBox.addEventListener("change", function(){
-        if(checkBox.checked){
-            check = true;
-            document.querySelector("span").innerText = "Selesai dibaca";
-        }
-        else {
-            check = false;
-            document.querySelector("span").innerText = "Belum selesai dibaca";
-        }
-    });
+    if(checkBox.checked){
+        check = true;
+        document.querySelector("span").innerText = "Selesai dibaca";
+    }else {
+        check = false;
+        document.querySelector("span").innerText = "Belum selesai dibaca";
+    }
 
     const buku = createBookshelf(textJudul, textPenulis, textTahun, check);
     const bookObject = composeBookshelfObject(textJudul, textPenulis, textTahun, check);
@@ -58,7 +57,11 @@ function addBook(){
     buku[RAK_BUKUID] = bookObject.id;
     rakBuku.push(bookObject);
 
-    uncompletedBookList.append(buku);
+    if(check){
+        completedBookList.append(buku);
+    }else{
+        uncompletedBookList.append(buku);
+    }
     updateDataToStorage();
 }
 
@@ -82,9 +85,9 @@ function addBookToCompleted(taskElement){
 
 function undoBookFromCompleted(taskElement){
     const listUncompleted = document.getElementById(UNCOMPLETED_BOOK_ID);
-    const judul = document.getElementById("judul");
-    const penulis = document.getElementById("penulis");
-    const tahun = document.getElementById("tahun");
+    const judul = taskElement.querySelector(".book_item > h3").innerText;
+    const penulis = taskElement.querySelector("#penulis").innerText;
+    const tahun = taskElement.querySelector("#tahun").innerText;
 
     const newBook = createBookshelf(judul, penulis, tahun, false);
 
